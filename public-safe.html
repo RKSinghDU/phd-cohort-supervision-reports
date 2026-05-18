@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PhD Cohort Analysis Report — Public-Safe Version</title>
+<style>
+:root {
+  --bg: #ffffff;
+  --fg: #1a1a1a;
+  --muted: #5a5a5a;
+  --accent: #2c5282;
+  --border: #d4d4d4;
+  --soft: #f7f7f5;
+  --red: #c53030;
+  --amber: #d69e2e;
+  --green: #2f855a;
+  --red-bg: #fff5f5;
+  --amber-bg: #fffbeb;
+  --green-bg: #f0fff4;
+}
+* { box-sizing: border-box; }
+body {
+  font-family: 'Georgia', 'Charter', 'Iowan Old Style', serif;
+  font-size: 15px;
+  line-height: 1.65;
+  color: var(--fg);
+  background: var(--bg);
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem 4rem;
+}
+h1, h2, h3, h4 {
+  font-family: 'Helvetica Neue', 'Arial', sans-serif;
+  color: var(--accent);
+  line-height: 1.25;
+  margin-top: 2rem;
+}
+h1 { font-size: 2rem; border-bottom: 3px solid var(--accent); padding-bottom: 0.4rem; }
+h2 { font-size: 1.4rem; border-bottom: 1px solid var(--border); padding-bottom: 0.3rem; margin-top: 2.5rem; }
+h3 { font-size: 1.15rem; color: var(--fg); margin-top: 1.5rem; }
+h4 { font-size: 1rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.05em; }
+.cover {
+  text-align: center;
+  padding: 2rem 0 3rem;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 2rem;
+}
+.cover h1 { border: none; font-size: 2.3rem; margin-bottom: 0.5rem; }
+.cover .meta { color: var(--muted); font-style: italic; }
+table {
+  border-collapse: collapse;
+  width: 100%;
+  margin: 1.2rem 0;
+  font-size: 0.92rem;
+}
+th, td {
+  border: 1px solid var(--border);
+  padding: 8px 10px;
+  text-align: left;
+  vertical-align: top;
+}
+th { background: var(--soft); font-family: 'Helvetica Neue', sans-serif; font-weight: 600; }
+tr:nth-child(even) td { background: #fafafa; }
+.rag-red { background: var(--red-bg) !important; color: var(--red); font-weight: 600; }
+.rag-amber { background: var(--amber-bg) !important; color: var(--amber); font-weight: 600; }
+.rag-green { background: var(--green-bg) !important; color: var(--green); font-weight: 600; }
+blockquote {
+  border-left: 4px solid var(--accent);
+  margin: 1.2rem 0;
+  padding: 0.4rem 1rem;
+  background: var(--soft);
+  color: var(--muted);
+  font-style: italic;
+}
+ul, ol { padding-left: 1.5rem; }
+li { margin: 0.3rem 0; }
+hr { border: none; border-top: 2px solid var(--border); margin: 3rem 0; }
+.toc {
+  background: var(--soft);
+  border: 1px solid var(--border);
+  padding: 1rem 1.5rem;
+  margin: 2rem 0;
+  border-radius: 4px;
+}
+.toc h3 { margin-top: 0; color: var(--accent); }
+.toc ol { margin: 0; }
+.toc a { color: var(--accent); text-decoration: none; }
+.toc a:hover { text-decoration: underline; }
+.callout {
+  background: var(--soft);
+  border-left: 4px solid var(--accent);
+  padding: 1rem 1.2rem;
+  margin: 1.2rem 0;
+  border-radius: 0 4px 4px 0;
+}
+.callout strong { color: var(--accent); }
+.privacy-banner {
+  background: var(--amber-bg);
+  border: 1px solid var(--amber);
+  color: #744210;
+  padding: 1rem 1.2rem;
+  margin: 1.5rem 0 2rem;
+  border-radius: 4px;
+  font-size: 0.9rem;
+}
+.privacy-banner strong { color: #744210; }
+.student-header {
+  background: linear-gradient(to right, var(--soft), transparent);
+  padding: 1.2rem 1.5rem;
+  border-left: 5px solid var(--accent);
+  margin: 3rem 0 1.5rem;
+}
+.student-header h1 { border: none; margin: 0; }
+.student-header .meta-line { color: var(--muted); font-size: 0.9rem; margin-top: 0.4rem; font-family: 'Helvetica Neue', sans-serif; }
+code { background: var(--soft); padding: 1px 5px; border-radius: 3px; font-size: 0.9em; }
+@media print {
+  body { max-width: none; }
+  h1, h2 { page-break-after: avoid; }
+  table, blockquote, .callout { page-break-inside: avoid; }
+  .student-header { page-break-before: always; }
+}
+@media (max-width: 700px) {
+  body { font-size: 14px; padding: 1rem; }
+  table { font-size: 0.85rem; }
+  th, td { padding: 6px; }
+}
+</style>
+</head>
+<body>
+
+<div class="cover">
+<h1>PhD Cohort Analysis Report</h1>
+<p style="font-size:1.2rem; color: var(--muted); margin: 0.3rem 0;">Five-Layer Protocol v2.1 — Consolidated Run</p>
+<p class="meta">Four anonymized scholars: R.C. · Sh. · K. · S.D.</p>
+<p class="meta">May 2026</p>
+</div>
+
+<div class="privacy-banner">
+<strong>⚠️ Public-Safe Version.</strong> Student names have been redacted to initials. Specific identifying details (conference attendance, exact dates, supervisor identity) have been generalized. Note: initials + research-topic combinations may still allow re-identification by readers familiar with the cohort. Treat with discretion.
+</div>
+
+<div class="toc">
+<h3>Contents</h3>
+<ol>
+<li><a href="#exec">Executive Summary</a></li>
+<li><a href="#rc">Scholar R.C. — Common Good HRM</a></li>
+<li><a href="#sh">Scholar Sh. — Job Crafting</a></li>
+<li><a href="#k">Scholar K. — Paradoxical Leadership</a></li>
+<li><a href="#sd">Scholar S.D. — HESD & PEB</a></li>
+<li><a href="#cohort">Cross-Cohort Comparison & Recommendations</a></li>
+</ol>
+</div>
+
+<h2 id="exec">Executive Summary</h2>
+<p>This report applies the v2.1 Five-Layer Analysis Protocol to four PhD scholars. All four were given the same C1–C8 reflection-folder architecture on 13 February 2026. <strong>None of the four has used the architecture as intended.</strong> Three different alternative workflows persist: R.C. uses C1 as a universal reading log; Sh. has produced no protocol activity at all since 9 January 2026; K. and S.D. work in the older Corpus_Map_Template structure. This points to a launch-without-onboarding pattern that a single 60-minute cohort workshop is likely to fix.</p>
+
+<table>
+<tr><th>Scholar</th><th>Topic</th><th>Actual Phase</th><th>Status</th><th>Most Urgent Intervention</th></tr>
+<tr><td><strong>R.C.</strong></td><td>Common Good HRM</td><td>Framework Refinement<br><em>(claims "Finalization")</em></td><td class="rag-red">🔴 Red</td><td>Reset the architecture; force DV decision</td></tr>
+<tr><td><strong>Sh.</strong></td><td>Job Crafting + Emotional Stability</td><td>Pre-Foundation<br><em>(dormant ≥18 weeks)</em></td><td class="rag-red">🔴 Red</td><td>Wellbeing & commitment check</td></tr>
+<tr><td><strong>K.</strong></td><td>Paradoxical Leadership (Advaita angle)</td><td>Late Early-LR</td><td class="rag-amber">🟡 Amber</td><td>Articulate single RQ; commit methodology</td></tr>
+<tr><td><strong>S.D.</strong></td><td>HESD → Pro-Environmental Behaviour</td><td>Empirical Execution / Data Analysis</td><td class="rag-amber">🟡 Amber (leaning Green)</td><td>Start writing; convert completed work to manuscripts</td></tr>
+</table>
+
+<hr>
+
+<div class="student-header" id="rc">
+<h1>1. Scholar R.C.</h1>
+<div class="meta-line"><strong>Topic:</strong> Common Good HRM · ethical culture · ethical leadership · employee outcomes &nbsp;|&nbsp; <strong>Last activity:</strong> 27 April 2026 (C5+C6); 31 March (C1)<br><strong>Self-claimed phase:</strong> Finalization of Conceptual Model &nbsp;|&nbsp; <strong>Evidence-based phase:</strong> Framework Refinement with unresolved IV/DV/theory choices</div>
+</div>
+
+<h2>1.1 Critical Finding Upfront</h2>
+<p>The C1–C8 structure was created 13 February 2026. Three months later, <strong>only C1 has substantive content</strong> (16 paper reflections, mostly Level 2). C2 contains only two paper headers — both for her strongest gap-evidence papers (Pham et al. 2023, Lu et al. 2025) — with zero reflection content filled. C3, C4, C7, C8 are unmodified templates. Drafts is empty. Her "Articles read so far" folder reportedly contains ~279 PDFs; none have entered analytical processing.</p>
+
+<h2>1.2 Five-Layer Findings</h2>
+<h3>Layer 1 — Literature Landscape</h3>
+<p>Seed bucket healthy (16 substantive C1 entries, mostly top-tier HRM journals: <em>HRM Review</em>, <em>Employee Relations</em>, <em>Asia Pacific JHR</em>). Everything downstream unbuilt. Phase-appropriate threshold is 80–120 processed papers for "Proposal Ready"; she has 16 processed plus 279 unprocessed.</p>
+
+<h3>Layer 2 — Research Gap</h3>
+<p>Composite gap score <strong>16/25 (Amber)</strong>. Genuine and timely; scope unbounded; Indian justification performative. Two gap-anchor papers (Pham 2023, Lu 2025) cited in C5 but never analytically engaged in C2.</p>
+
+<h3>Layer 3 — Research Problem & Questions</h3>
+<p>RQ1 is essentially a literature-review question, not a PhD research question. RQ2 is double-barrelled (culture AND leadership) and vague ("integrated to facilitate"). Propositions P3 and P4 compete with each other. DV ("employee behaviour") undecided per C6 confusion #2. Framework maturity: <strong>Level 2 (Arrow Diagram)</strong>. Four alternate diagrams shown side-by-side in C5.</p>
+
+<h3>Layer 4 — Methodology</h3>
+<p>"Mixed Method (most probably)" — methodologically undeclared. Zero method papers read. Scale anxiety (C6 #1) is fundamental but no scale-development literature catalogued. The IV-DV operationalisation question is being driven by measurement convenience rather than theory.</p>
+
+<h3>Layer 5 — Trajectory</h3>
+<p>C5 and C6 updated 27 April but content unchanged in substance (same four alternative framework images survive across versions). Five C6 confusions open; <strong>zero resolved across three months</strong>. Default resolution path for every dilemma is "Discussion with Supervisor" — external dependency rather than scholarly autonomy.</p>
+
+<h2>1.3 Composite Progress Dashboard</h2>
+<table>
+<tr><th>Dimension</th><th>Status</th></tr>
+<tr><td>Literature breadth</td><td class="rag-amber">🟡 Amber — 16 processed + 279 unprocessed</td></tr>
+<tr><td>Research gap clarity</td><td class="rag-amber">🟡 Amber</td></tr>
+<tr><td>Research questions</td><td class="rag-red">🔴 Red</td></tr>
+<tr><td>Conceptual framework</td><td class="rag-red">🔴 Red — Level 2, four alternates, DV undecided</td></tr>
+<tr><td>Theoretical grounding</td><td class="rag-red">🔴 Red — C3 empty</td></tr>
+<tr><td>Methodology direction</td><td class="rag-red">🔴 Red</td></tr>
+<tr><td>Indian context</td><td class="rag-red">🔴 Red — boilerplate only</td></tr>
+<tr><td>Counter-evidence engagement</td><td class="rag-red">🔴 Red — misfiled in C1</td></tr>
+<tr><td>Reflective depth</td><td class="rag-amber">🟡 Amber — 75% L2; 0% L3</td></tr>
+<tr><td>Writing output</td><td class="rag-red">🔴 Red — Drafts empty</td></tr>
+<tr><td>Trajectory</td><td class="rag-red">🔴 Red — 0 resolved confusions in 3 months</td></tr>
+<tr><td>Phase self-assessment vs evidence</td><td class="rag-red">🔴 Red — claims "Finalization"; evidence supports earlier stage</td></tr>
+</table>
+
+<h2>1.4 Resolving C6 Dilemmas — Specific Guidance</h2>
+<ol>
+<li><strong>CGHRM lacks established scales:</strong> Conceptual paper + scale-development paper first; empirical chapter follows. Reading: MacKenzie, Podsakoff & Podsakoff (2011); Hinkin (1998); Pham et al. (2023) Appendix A.</li>
+<li><strong>DV choice (social sustainability / well-being / pro-social behaviour):</strong> Most foundational unresolved question. Recommend <strong>OCB-Society / employee pro-social behaviour</strong> as primary DV.</li>
+<li><strong>Ethical culture vs ethical climate as IV:</strong> Theory-driven choice required. CGHRM is rooted in values; <strong>ethical culture is theoretically correct</strong>. Reading: Treviño, Butterfield & McCabe (1998); Treviño & Weaver (2003).</li>
+<li><strong>Search string:</strong> Sample — <code>TITLE-ABS-KEY(("common good HRM" OR ("sustainable HRM" AND ("common good" OR dignity OR humanistic))) AND (ethic* OR "ethical culture" OR "ethical leadership")) AND PUBYEAR &gt; 2018</code></li>
+<li><strong>Theories underpinning the model:</strong> EC → CGHRM: Schein / Treviño culture frameworks. EL moderator: Social Learning Theory (Bandura 1977; Brown, Treviño & Harrison 2005). CGHRM → behaviour: AMO theory or Social Exchange. Umbrella: Stakeholder Theory (Freeman 1984).</li>
+</ol>
+
+<h2>1.5 Five Discussion Questions for Next Meeting</h2>
+<ol>
+<li>"Show me the C5 framework you actually believe in — not three, one. Which arrows are theory-justified, and which are placeholders?"</li>
+<li>"What is your DV — one construct — and why? Take five minutes."</li>
+<li>"Walk me through Pham (2023) and Lu (2025) — their specific methodologies, samples, effect sizes, and why their conclusions translate to your model."</li>
+<li>"Four C1 papers contradict your win-win assumption. How do these revise P1–P5?"</li>
+<li>"You've chosen ethical culture as IV but in C6 you ask whether it should be ethical climate because it's easier to measure. Which is driving your model — your theory or your method?"</li>
+</ol>
+
+<h2>1.6 Recommended 2-Week Sprint</h2>
+<ol>
+<li>Move four counter-evidence papers from C1 to C8; complete C8 template for each.</li>
+<li>Complete C2 reflections for Pham et al. (2023) and Lu et al. (2025) — non-negotiable.</li>
+<li>Write 2-page memo: <em>"Why my DV must be X."</em></li>
+<li>Choose three anchor theories; complete C3 reflection for one paper each.</li>
+<li>Complete one C4 reflection — Pham (2023) as the "model study."</li>
+</ol>
+
+<hr>
+
+<div class="student-header" id="sh">
+<h1>2. Scholar Sh.</h1>
+<div class="meta-line"><strong>Topic:</strong> Job crafting; impact of individual personality / emotional stability on crafting behaviour and outcomes<br><strong>Last documented activity:</strong> 9 January 2026 — <strong>18+ weeks of zero activity</strong> &nbsp;|&nbsp; <strong>Phase:</strong> Pre-Foundation</div>
+</div>
+
+<h2>2.1 Critical Finding Upfront</h2>
+<p>Sh. is the <strong>most concerning</strong> of the four scholars. Every C1–C8 plus Drafts plus Corpus Map subfolder plus Resources Referred subfolder is empty. Her Corpus_Map_Template doesn't even have her own name or research area filled in. The entirety of her documented research thinking is three early-January documents: Thinking_Notes (one paragraph), Confusions (two sentences), Dilemmas (one sentence). <strong>Approximately 250 words across 4+ months.</strong></p>
+
+<h2>2.2 Five-Layer Findings</h2>
+<p><strong>Layer 1:</strong> Not assessable. No literature processed.<br>
+<strong>Layer 2:</strong> No gap articulated. One contradiction noted in January, never developed.<br>
+<strong>Layer 3:</strong> No RQs. No propositions. No framework. Maturity: Level 1.<br>
+<strong>Layer 4:</strong> Not assessable. No methodology declared.<br>
+<strong>Layer 5:</strong> 9 January → 18 May = <strong>18 weeks of zero documented activity</strong>. Not slow progress; arrested motion.</p>
+
+<h2>2.3 Composite Progress Dashboard</h2>
+<p>All twelve dimensions: <span class="rag-red">🔴 Red</span>. The protocol cannot be assessed because the protocol has not been used.</p>
+
+<h2>2.4 Diagnostic Frame</h2>
+<div class="callout">
+<p>A four-month silence after a promising start usually has one of four causes:</p>
+<ol>
+<li>Personal / health / family circumstances she has not disclosed</li>
+<li>Loss of confidence — the topic now feels too large</li>
+<li>Loss of direction — she doesn't know what step comes next</li>
+<li>Loss of motivation — competing priorities or doubts about the PhD</li>
+</ol>
+<p><strong>The next supervision meeting is NOT a methodological correction. It is a wellbeing-and-commitment check.</strong> Establish first whether she is still in this, what is blocking her, and what one small concrete step she can complete in the next 7 days.</p>
+</div>
+
+<h2>2.5 Five Discussion Questions for Next Meeting</h2>
+<ol>
+<li>"Walk me through what's happened with your research since January. What's been going on?"</li>
+<li>"You wrote in January that 'some studies show emotional stability is positively related to job crafting, others show no correlation.' Which two studies were you thinking of?"</li>
+<li>"What's one paper you've read that you'd be willing to write a half-page reflection on this week?"</li>
+<li>"If you had to write one sentence answering 'what is your research about?' — not the topic, but the puzzle you're trying to solve — what would it say?"</li>
+<li>"Is there something I should know that you haven't told me?"</li>
+</ol>
+
+<h2>2.6 Recovery Path (if she is still in)</h2>
+<ul>
+<li><strong>Week 1:</strong> Articulate a one-sentence research question (not topic) about job crafting and personality.</li>
+<li><strong>Weeks 2–3:</strong> Read 8 core papers; fill the Corpus Map (same exercise K. completed).</li>
+<li><strong>Weeks 4–5:</strong> Turn the synthesis section of the Corpus Map into a first version of C5.</li>
+</ul>
+
+<hr>
+
+<div class="student-header" id="k">
+<h1>3. Scholar K.</h1>
+<div class="meta-line"><strong>Topic:</strong> Paradoxical Leadership (with emerging Indian / Advaita philosophical foundation)<br><strong>Last documented activity:</strong> 10 April 2026 (~5.5 weeks ago) &nbsp;|&nbsp; <strong>Phase:</strong> Late Early-LR / Pre-Conceptual-Framework</div>
+</div>
+
+<h2>3.1 Critical Finding Upfront</h2>
+<p>K. is the <strong>strongest analytical thinker in the cohort</strong>. She has produced substantively excellent doctoral work — but in the wrong containers. She bypassed the C1–C8 protocol and continued in the older Corpus_Map_Template. C2–C8 reflection documents don't exist; a C5/C6 has not been created. A sub-folder "ideation seeding papers" was created in her C1 on 10 April, suggesting she began migrating, then stopped.</p>
+
+<h2>3.2 What She Has Produced</h2>
+<table>
+<tr><th>Document</th><th>Content</th><th>Quality</th></tr>
+<tr><td>Corpus_Map_Template</td><td>8 papers fully analyzed with page-cited quotes + Corpus Synthesis (Known/Contested/Unknown/Claimed Gaps) + CORE/PERIPHERAL classification</td><td class="rag-green">Excellent</td></tr>
+<tr><td>Bibliography</td><td>46 paradoxical-leadership papers, all from ABDC A*/A or ABS 4*/4 outlets</td><td class="rag-green">Strong</td></tr>
+<tr><td>Thinking_Notes (Jan)</td><td>Sophisticated reflection; deliberate retreat from earlier "shallow" definition; Advaita reference</td><td class="rag-green">High</td></tr>
+<tr><td>Dilemmas (Jan)</td><td>Western vs Eastern paradox treatment (Advaita / yin-yang); attendance at an international policy dialogue forum to observe paradox-handling in practice</td><td class="rag-green">High & distinctive</td></tr>
+</table>
+
+<h2>3.3 Five-Layer Findings</h2>
+<p><strong>Layer 1:</strong> 46-paper bibliography exceeds Early-LR threshold. 5 strong seminal anchors (Smith & Lewis 2011; Zhang et al. 2015; Schad et al. 2016; Miron-Spektor et al. 2018; Lewis, Andriopoulos & Smith 2014). 22/46 from 2022–2025. ≥60% top-tier. <strong>Indian-context papers: 0. Method papers: 0.</strong> Counter-evidence: 4+ papers in bibliography — acquired but not engaged.<br>
+<strong>Layer 2:</strong> Four candidate gaps. Gap 1 (Indian / Advaita context): composite 22/25 — strong. Primary axis should be Gap 1.<br>
+<strong>Layer 3:</strong> No formal RQ. Framework maturity: Level 2 / Pre-Level 2.<br>
+<strong>Layer 4:</strong> None declared. Implicit qualitative direction defensible but needs commitment.<br>
+<strong>Layer 5:</strong> Substantive production December 2025 → April 2026. 5.5-week pause likely calendar/teaching.</p>
+
+<h2>3.4 Reflection Level Classification (Corpus Map)</h2>
+<table>
+<tr><th>Level</th><th>Count</th><th>%</th></tr>
+<tr><td>L1 — Summary</td><td>0</td><td>0%</td></tr>
+<tr><td>L2 — Analytical</td><td>4 (papers 5–8)</td><td>50%</td></tr>
+<tr><td>L3 — Integrative</td><td>4 (papers 1–4 + Corpus Synthesis A/B/C/D)</td><td>50%</td></tr>
+</table>
+<p><strong>Highest L3 share in the cohort.</strong></p>
+
+<h2>3.5 Composite Progress Dashboard</h2>
+<table>
+<tr><th>Dimension</th><th>Status</th></tr>
+<tr><td>Literature breadth</td><td class="rag-green">🟢 Green — 46 top-tier papers</td></tr>
+<tr><td>Research gap clarity</td><td class="rag-amber">🟡 Amber — needs convergence on primary</td></tr>
+<tr><td>Research questions</td><td class="rag-red">🔴 Red — no formal RQ</td></tr>
+<tr><td>Conceptual framework</td><td class="rag-amber">🟡 Amber — Level 2 emerging</td></tr>
+<tr><td>Theoretical grounding</td><td class="rag-green">🟢 Green</td></tr>
+<tr><td>Methodology direction</td><td class="rag-red">🔴 Red — no engagement</td></tr>
+<tr><td>Indian context</td><td class="rag-amber">🟡 Amber — substantive in notes; no textual base</td></tr>
+<tr><td>Counter-evidence engagement</td><td class="rag-amber">🟡 Amber — papers exist; no reflections</td></tr>
+<tr><td>Reflective depth</td><td class="rag-green">🟢 Green — 50% L3</td></tr>
+<tr><td>Writing output</td><td class="rag-amber">🟡 Amber — Corpus Map substantial; no draft yet</td></tr>
+<tr><td>Trajectory</td><td class="rag-amber">🟡 Amber — 5.5-week pause</td></tr>
+<tr><td>Phase alignment</td><td class="rag-green">🟢 Green</td></tr>
+</table>
+
+<h2>3.6 Five Discussion Questions for Next Meeting</h2>
+<ol>
+<li>"Your Corpus Map is the best analytical work in your cohort. Now — translate Section D of it into one sentence that begins 'In my PhD I will investigate…' "</li>
+<li>"You said in January that contradictions in the Advaita tradition are 'not seen as weaknesses but a part of reality itself.' How does that ontology change the model Zhang et al. (2015) built? Which of their five PLB dimensions would survive transposition, and which wouldn't?"</li>
+<li>"Your bibliography has dark-side papers on paradoxical leadership. How does the dark-side literature constrain your propositions?"</li>
+<li>"If you had to commit to one methodological tradition by end of June — qualitative grounded theory, mixed methods, or quantitative scale-testing — which would you pick and why?"</li>
+<li>"What happened between April 10 and now?"</li>
+</ol>
+
+<h2>3.7 Recommended 2-Week Sprint</h2>
+<ol>
+<li>Write one paragraph stating a single primary research question.</li>
+<li>Draw a v1 conceptual framework figure.</li>
+<li>Migrate 8 Corpus Map papers into C1–C8 using the functional architecture.</li>
+<li>Read 3 method papers: Charmaz (2014) <em>Constructing Grounded Theory</em>; Eisenhardt (1989) AMR; Pratt (2009) AMJ.</li>
+<li>Read 3 Indian-context organizational behavior papers to seed C7 (<em>Vikalpa</em>, <em>IIMB Management Review</em>).</li>
+</ol>
+
+<hr>
+
+<div class="student-header" id="sd">
+<h1>4. Scholar S.D.</h1>
+<div class="meta-line"><strong>Topic:</strong> Higher Education for Sustainable Development & Pro-Environmental Behaviour<br><strong>Working title:</strong> A study of sustainability education-based interventions on student pro-environmentalism, using an experimental design<br><strong>Phase:</strong> Empirical study execution / data analysis <strong>(most advanced in cohort)</strong> &nbsp;|&nbsp; <strong>Last activity:</strong> 31 March 2026 (likely fieldwork)</div>
+</div>
+
+<h2>4.1 Critical Finding Upfront</h2>
+<p>S.D. is the <strong>most advanced scholar in the cohort</strong> by a clear margin. Most complete Corpus Map (all 10 paper slots filled, page-cited quotes, full synthesis), defined research question, 8-week experimental intervention course designed, primary data likely collected or in collection, mature epistemic reflexivity. Like the others, she has bypassed C1–C8 entirely. <strong>The diagnostic frame for her is different in kind:</strong> she is past the C1–C8 architecture's intended function. The supervisory task is to <strong>switch her primary mode from reading to writing.</strong></p>
+
+<h2>4.2 Five-Layer Findings</h2>
+<p><strong>Layer 1:</strong> Corpus Map covers 10 papers including <em>Nature Human Behaviour</em> (van Valkengoed et al. 2022), <em>Journal of Environmental Psychology</em> (Steg & Vlek 2009), <em>Journal of Social Issues</em> (Dunlap et al. 2000 NEP scale). Bibliometric analysis already conducted. <strong>Indian-context papers: zero</strong> — single most defensible weakness for examiner challenge.<br>
+<strong>Layer 2:</strong> Five gaps articulated. <strong>Gap 3 (lack of true-experimental work in PEB) is her strongest — 23/25.</strong> Methodological choice is itself her primary contribution.<br>
+<strong>Layer 3:</strong> No formal RQ written. Framework maturity: <strong>Level 3 (Theory-Linked)</strong> — theories named (TPB, NAM, VBN, Goal Framing). <strong>Only scholar in cohort above Level 2.</strong><br>
+<strong>Layer 4:</strong> True experimental design with random assignment, treatment and control, pre/post test. Intervention: 8-week structured ESD course. Open empirical-defense questions: sample size, pilot study, manipulation check, CMB controls.<br>
+<strong>Layer 5:</strong> 7-week document silence since 31 March most plausibly reflects active fieldwork. <strong>Empty Drafts folder is the most concerning trajectory signal at her stage.</strong></p>
+
+<h2>4.3 Reflection Level Classification (Corpus Map)</h2>
+<table>
+<tr><th>Level</th><th>Count</th><th>%</th></tr>
+<tr><td>L1 — Summary</td><td>0</td><td>0%</td></tr>
+<tr><td>L2 — Analytical</td><td>10 paper entries</td><td>71%</td></tr>
+<tr><td>L3 — Integrative</td><td>4 Synthesis sub-sections</td><td>29%</td></tr>
+</table>
+<p>Plus PhD-grade reflexive thinking in Confusions/Dilemmas — acknowledges epistemological limits, structural critique of individual-behavior research, measurement-instrument limits, and own responsibility in making causal claims.</p>
+
+<h2>4.4 Composite Progress Dashboard</h2>
+<table>
+<tr><th>Dimension</th><th>Status</th></tr>
+<tr><td>Literature breadth (visible)</td><td class="rag-amber">🟡 Amber — strong corpus; Indian-context hole</td></tr>
+<tr><td>Research gap clarity</td><td class="rag-green">🟢 Green — methodological gap sharp and defensible</td></tr>
+<tr><td>Research questions</td><td class="rag-amber">🟡 Amber — embryonic; not formally written</td></tr>
+<tr><td>Conceptual framework</td><td class="rag-amber">🟡 Amber leaning Green — Level 3</td></tr>
+<tr><td>Theoretical grounding</td><td class="rag-green">🟢 Green</td></tr>
+<tr><td>Methodology direction</td><td class="rag-green">🟢 Green — true experimental</td></tr>
+<tr><td>Indian context</td><td class="rag-red">🔴 Red — claimed but not built</td></tr>
+<tr><td>Counter-evidence engagement</td><td class="rag-amber">🟡 Amber</td></tr>
+<tr><td>Reflective depth</td><td class="rag-green">🟢 Green — 29% L3 + reflexive maturity</td></tr>
+<tr><td>Writing output</td><td class="rag-red">🔴 Red — most actionable concern</td></tr>
+<tr><td>Trajectory</td><td class="rag-amber">🟡 Amber — likely fieldwork</td></tr>
+<tr><td>Phase alignment</td><td class="rag-green">🟢 Green</td></tr>
+</table>
+
+<h2>4.5 Writing Pipeline — Most Actionable Section</h2>
+<table>
+<tr><th>Section</th><th>Status</th><th>Readiness</th></tr>
+<tr><td><strong>Bibliometric paper</strong></td><td class="rag-red">🔴 Not visible</td><td>Analysis done; should already be drafting</td></tr>
+<tr><td>Introduction & gap statement</td><td class="rag-green">🟢 Assemblable</td><td>This month</td></tr>
+<tr><td>Literature review</td><td class="rag-green">🟢 Assemblable</td><td>This month</td></tr>
+<tr><td>Theoretical framework</td><td class="rag-amber">🟡 Theories named; needs integrated figure</td><td>2–3 weeks</td></tr>
+<tr><td><strong>Methodology chapter</strong></td><td class="rag-amber">🟡 Design clear; needs formal write-up</td><td>3–4 weeks</td></tr>
+<tr><td>Indian context positioning</td><td class="rag-red">🔴 Needs 5–8 papers</td><td>4–6 weeks</td></tr>
+<tr><td>Empirical findings</td><td>⏳ Pending data analysis</td><td>Depends on fieldwork</td></tr>
+</table>
+
+<h2>4.6 Five Discussion Questions for Next Meeting</h2>
+<ol>
+<li>"Where is your bibliometric paper draft? You mentioned the analysis is done — show me the figure list and writing outline, or let's create one in this meeting."</li>
+<li>"Walk me through your sample size justification, manipulation check design, and what counts as a CMB control in your study."</li>
+<li>"Your Synthesis section identifies a contradiction between two recent papers on the knowledge-behaviour pathway. Which side does your study test, and what would each result mean for the literature?"</li>
+<li>"Name three Indian-context PEB papers you've read."</li>
+<li>"Draw your conceptual framework for me on paper, right now, in five minutes."</li>
+</ol>
+
+<h2>4.7 Recommended 2-Week Sprint</h2>
+<ol>
+<li>Write one explicit RQ statement (primary + sub-questions).</li>
+<li>Draw one integrated conceptual framework figure (HESD → knowledge → attitudes/norms/PBC → intention → PEB).</li>
+<li>Outline the bibliometric paper — target journal, structure, figures, key findings.</li>
+<li>Read 5 Indian-context PEB papers; write 5 Corpus Map-style entries.</li>
+<li>Write one-page memo on manipulation check, pilot status, sample size justification, CMB controls.</li>
+</ol>
+<div class="callout"><strong>Strategic note:</strong> Do NOT push her to fill C1–C8 retrospectively. At her phase, that is sunk-cost compliance, not learning. Use C7 (Indian context reading) and C8 (key contradictions as boundary conditions) as targeted prompts only.</div>
+
+<hr>
+
+<h1 id="cohort">5. Cross-Cohort Comparison & Recommendations</h1>
+
+<h2>5.1 Side-by-Side Comparison</h2>
+<table>
+<tr><th>Dimension</th><th>R.C.</th><th>Sh.</th><th>K.</th><th>S.D.</th></tr>
+<tr><td>Topic</td><td>CGHRM</td><td>Job crafting</td><td>Paradox Leadership</td><td>HESD → PEB</td></tr>
+<tr><td>Phase (claimed vs evidence)</td><td>Finalization / actually Refinement</td><td>Pre-Foundation</td><td>Late Early-LR</td><td>Empirical execution ✅</td></tr>
+<tr><td>Corpus Map equivalent</td><td>16 C1 (no synthesis)</td><td>Empty (no name)</td><td>8 papers + synthesis</td><td>10 papers + synthesis</td></tr>
+<tr><td>Reflective depth L3 %</td><td>0%</td><td>N/A</td><td>50%</td><td>29% + reflexive maturity</td></tr>
+<tr><td>Methodology declared</td><td>Mixed (probably)</td><td>None</td><td>None</td><td>True experimental ✅</td></tr>
+<tr><td>Indian context substance</td><td>Boilerplate ×16</td><td>None</td><td>Substantive (Advaita)</td><td>Claimed, not built</td></tr>
+<tr><td>Counter-evidence engagement</td><td>Misfiled in C1</td><td>Noted once</td><td>In bibliography</td><td>In synthesis</td></tr>
+<tr><td>Data status</td><td>None</td><td>None</td><td>None</td><td>Likely collected ✅</td></tr>
+<tr><td>Drafts folder</td><td>Empty</td><td>Empty</td><td>Empty</td><td>Empty ⚠️</td></tr>
+<tr><td>Last activity</td><td>27 Apr (3 wks)</td><td>9 Jan (18 wks)</td><td>10 Apr (5.5 wks)</td><td>31 Mar (7 wks)</td></tr>
+<tr><td>Most urgent intervention</td><td>Reset architecture</td><td>Wellbeing check</td><td>Articulate RQ</td><td>Start writing</td></tr>
+<tr><td>Overall status</td><td class="rag-red">🔴</td><td class="rag-red">🔴</td><td class="rag-amber">🟡</td><td class="rag-amber">🟡 leaning 🟢</td></tr>
+</table>
+
+<h2>5.2 The Cohort-Level Pattern</h2>
+<p>Four of four scholars have bypassed the C1–C8 protocol. Three different alternative workflows persist (R.C.: C1-as-universal-log; Sh.: no workflow; K. & S.D.: older Corpus_Map architecture). <strong>The pattern points strongly to a launch-without-onboarding cause rather than scholar-by-scholar resistance.</strong></p>
+
+<h2>5.3 Recommended Cohort Workshop (60 minutes)</h2>
+<div class="callout">
+<p><strong>Title:</strong> "Why these eight folders exist and what kind of thinking each one forces."</p>
+<ul>
+<li>Use <strong>S.D.'s Corpus Map</strong> as the worked example of analytical depth with page citations</li>
+<li>Use <strong>K.'s Corpus Synthesis</strong> as the worked example of L3 integrative thinking (Known/Contested/Unknown/Claimed Gaps)</li>
+<li>Use one of <strong>R.C.'s C1 entries</strong> as the worked example of L2 paper engagement</li>
+<li>Demonstrate the functional difference between C1 (seed ideation), C2 (specific hypothesis evidence), C3 (theory papers), C4 (methodology and scale papers), C7 (Indian context), C8 (counter-evidence)</li>
+<li>End with each scholar committing to migrate 3 existing papers into the right functional bucket within 7 days</li>
+</ul>
+</div>
+
+<h2>5.4 Differentiated Supervisory Approach</h2>
+<table>
+<tr><th>Scholar</th><th>Mode</th><th>First-Meeting Aim</th></tr>
+<tr><td>R.C.</td><td>Architectural reset</td><td>Force DV decision + migrate counter-evidence papers from C1 to C8</td></tr>
+<tr><td>Sh.</td><td>Wellbeing & commitment check</td><td>Establish whether she is still in this; if yes, set one small concrete next step</td></tr>
+<tr><td>K.</td><td>Convergence push</td><td>Translate Synthesis D into one written RQ; commit to a methodological tradition by end of June</td></tr>
+<tr><td>S.D.</td><td>Mode-switch from reading to writing</td><td>Outline the bibliometric paper in the meeting itself; confirm fieldwork status and timeline</td></tr>
+</table>
+
+<hr>
+
+<p style="text-align:center; color: var(--muted); font-style: italic; margin-top: 3rem;">End of Report.<br>Public-safe redacted version. Generated using the v2.1 Five-Layer Analysis Protocol.</p>
+
+</body>
+</html>
